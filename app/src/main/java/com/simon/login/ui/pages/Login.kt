@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,12 +29,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.simon.login.viewModel.AuthState
 import com.simon.login.viewModel.AuthViewModel
 import kotlin.simon.login.R
 
 
 @Composable
 fun LoginPage(modifier: Modifier=Modifier,navController: NavController,authViewModel: AuthViewModel){
+
+    val authState = authViewModel.authState.observeAsState()
+    LaunchedEffect(authState.value) {
+        when(authState.value) {
+            is AuthState.Authenticated -> navController.navigate("homepage")
+
+            else -> Unit
+        }
+    }
 
     var userName by remember {
         mutableStateOf("")
@@ -77,7 +88,9 @@ fun LoginPage(modifier: Modifier=Modifier,navController: NavController,authViewM
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { navController.navigate("homepage") }) {
+        Button(onClick = { authViewModel.login(userName, password) },
+            enabled = authState.value != AuthState.Loading
+            ) {
             Text(text = "Login")
         }
         
