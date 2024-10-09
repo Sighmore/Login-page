@@ -4,23 +4,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.simon.login.ui.LoginPage
+import androidx.compose.ui.unit.dp
+import com.simon.login.ui.AppNavigation
 import com.simon.login.ui.theme.LoginTheme
+import com.simon.login.viewModel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        //created the viewModel from here and passed it
+        val authViewModel: AuthViewModel by viewModels()
         setContent {
             LoginTheme {
-                LoginPage()
+
+                AppNavigation(modifier = Modifier.padding(10.dp), authViewModel = authViewModel)
+
             }
         }
     }

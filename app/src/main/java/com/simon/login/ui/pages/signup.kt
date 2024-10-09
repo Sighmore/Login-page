@@ -2,6 +2,7 @@ package com.simon.login.ui.pages
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -22,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.simon.login.viewModel.AuthViewModel
 import kotlin.simon.login.R
 
 
 @Composable
-fun SignUpPage(){
+fun SignUpPage(modifier: Modifier=Modifier,navController: NavController,authViewModel: AuthViewModel){
 
     var userName by remember {
         mutableStateOf("")
@@ -34,6 +38,8 @@ fun SignUpPage(){
     var password by remember {
         mutableStateOf("")
     }
+
+    val authState = authViewModel.authState.observeAsState()
 
     Column(modifier = Modifier
         .fillMaxSize(),
@@ -51,13 +57,12 @@ fun SignUpPage(){
         Text(text = "Create Account")
 
         Spacer(modifier = Modifier.height(16.dp))
-
         OutlinedTextField(
             value = userName,
             onValueChange = {
                 userName=it
             },
-            label = { Text(text = "Username") }
+            label = { Text(text = "Email") }
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -69,14 +74,16 @@ fun SignUpPage(){
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { Log.i("credentials","Username: $userName Password: $password") }) {
-            Text(text = "Login")
+        Button(onClick = {
+            authViewModel.signup(userName, password)
+        }) {
+            Text(text = "Create Account")
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        TextButton(onClick = { Log.i("Reset password", userName) }) {
-            Text(text = "Forgot password")
+        TextButton(onClick = { navController.navigate("login") }) {
+            Text(text = "Have an account")
         }
 
 

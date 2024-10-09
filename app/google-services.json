@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903299333241",
+    "project_id": "login-fed27",
+    "storage_bucket": "login-fed27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903299333241:android:34ea38bc5169b94be3e8a8",
+        "android_client_info": {
+          "package_name": "kotlin.simon.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBppgL1Q2Sd_i21I11GwXWgb37tJf-uP-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.simon.login.ui
+package com.simon.login.ui.pages
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -27,11 +27,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.simon.login.viewModel.AuthViewModel
 import kotlin.simon.login.R
 
-@Preview
+
 @Composable
-fun LoginPage(){
+fun LoginPage(modifier: Modifier=Modifier,navController: NavController,authViewModel: AuthViewModel){
 
     var userName by remember {
         mutableStateOf("")
@@ -75,14 +77,14 @@ fun LoginPage(){
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { Log.i("credentials","Username: $userName Password: $password") }) {
+        Button(onClick = { navController.navigate("homepage") }) {
             Text(text = "Login")
         }
         
         Spacer(modifier = Modifier.height(10.dp))
 
-        TextButton(onClick = { Log.i("Reset password", userName) }) {
-            Text(text = "Forgot password")
+        TextButton(onClick = { navController.navigate("signup") }) {
+            Text(text = "Create account")
         }
         
         Text(text = "Login with")
